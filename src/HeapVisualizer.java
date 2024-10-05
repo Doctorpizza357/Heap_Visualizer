@@ -4,8 +4,13 @@ import java.awt.*;
 public class HeapVisualizer extends JFrame {
     private int[] heap;
 
-    public HeapVisualizer(int[] heap) {
+    public HeapVisualizer(int[] heap, boolean isMaxHeap) {
         this.heap = heap;
+        if (isMaxHeap) {
+            heapifyMax();
+        } else {
+            heapifyMin();
+        }
         setTitle("Heap Visualizer");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

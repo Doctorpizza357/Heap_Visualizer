@@ -9,13 +9,11 @@ public class Main {
         int[] array = {10, 5, 3, 1, 4, 2, 7, 6, 9, 8, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
 
         if (heapType.equals("max")) {
-            HeapVisualizer visualizer = new HeapVisualizer(array);
-            visualizer.heapifyMax();
+            HeapVisualizer visualizer = new HeapVisualizer(array, true);
             System.out.println("Max Heap: " + Arrays.toString(array)); // Display the max heap
             visualizer.setVisible(true);
         } else if (heapType.equals("min")) {
-            HeapVisualizer visualizer = new HeapVisualizer(array);
-            visualizer.heapifyMin();
+            HeapVisualizer visualizer = new HeapVisualizer(array, false);
             System.out.println("Min Heap: " + Arrays.toString(array)); // Display the min heap
             visualizer.setVisible(true);
         } else {
