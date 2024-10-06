@@ -3,9 +3,12 @@ import java.awt.*;
 
 public class HeapVisualizer extends JFrame {
     private int[] heap;
+    private HeapPanel heapPanel;
+    boolean isMaxHeap;
 
     public HeapVisualizer(int[] heap, boolean isMaxHeap) {
         this.heap = heap;
+        this.isMaxHeap = isMaxHeap;
         if (isMaxHeap) {
             heapifyMax();
         } else {
@@ -16,38 +19,48 @@ public class HeapVisualizer extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
-        add(new HeapPanel());
+        heapPanel = new HeapPanel();
+        add(heapPanel);
+        ControlPanel controlPanel = new ControlPanel(heap, this);
+        add(controlPanel, BorderLayout.SOUTH);
+    }
+
+    public void updateHeap(int[] newHeap) {
+        this.heap = newHeap;
+        if (isMaxHeap) {
+            heapifyMax();
+        } else {
+            heapifyMin();
+        }
+        heapPanel.repaint();
     }
 
     private class HeapPanel extends JPanel {
-        private static final int NODE_RADIUS = 20; // Radius of the node
-        private static final int HORIZONTAL_GAP = 50; // Horizontal gap between nodes
-        private static final int VERTICAL_GAP = 50; // Vertical gap between nodes
+        private static final int NODE_RADIUS = 20;
+        private static final int HORIZONTAL_GAP = 50;
+        private static final int VERTICAL_GAP = 50;
 
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (heap.length > 0) {
-                drawHeap(g, 0, getWidth() / 2, 30, getWidth() / 4); // Draw the heap
+                drawHeap(g, 0, getWidth() / 2, 30, getWidth() / 4);
             }
         }
 
         private void drawHeap(Graphics g, int index, int x, int y, int xOffset) {
             if (index >= heap.length) {
-                return; // Base case
+                return;
             }
 
-            // Draw the node
             g.setColor(Color.BLUE);
             g.fillOval(x - NODE_RADIUS, y - NODE_RADIUS, NODE_RADIUS * 2, NODE_RADIUS * 2);
             g.setColor(Color.WHITE);
             g.drawString(String.valueOf(heap[index]), x - 5, y + 5);
 
-            // Calculate the positions for the left and right child nodes
             int leftIndex = 2 * index + 1;
             int rightIndex = 2 * index + 2;
 
-            // Draw lines to children
             if (leftIndex < heap.length) {
                 int leftX = x - xOffset;
                 int leftY = y + VERTICAL_GAP;
@@ -65,7 +78,6 @@ public class HeapVisualizer extends JFrame {
         }
     }
 
-    // Method to heapify the array into a max heap
     public void heapifyMax() {
         int n = heap.length;
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -87,7 +99,6 @@ public class HeapVisualizer extends JFrame {
         }
 
         if (largest != i) {
-            // Swap
             int temp = heap[i];
             heap[i] = heap[largest];
             heap[largest] = temp;
@@ -96,7 +107,6 @@ public class HeapVisualizer extends JFrame {
         }
     }
 
-    // Method to heapify the array into a min heap
     public void heapifyMin() {
         int n = heap.length;
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -118,7 +128,6 @@ public class HeapVisualizer extends JFrame {
         }
 
         if (smallest != i) {
-            // Swap
             int temp = heap[i];
             heap[i] = heap[smallest];
             heap[smallest] = temp;
