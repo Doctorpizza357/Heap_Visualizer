@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class ControlPanel extends JPanel {
     private JLabel timeTakenLabel;
@@ -9,6 +10,11 @@ public class ControlPanel extends JPanel {
     private JLabel heapHeightLabel;
     private JLabel heapCapacityLabel;
     private JLabel heapTypeLabel;
+    private JLabel rootNodeLabel;
+    private JLabel minValueLabel;
+    private JLabel maxValueLabel;
+    private JLabel avgValueLabel;
+    private JLabel sumValueLabel;
     private JButton addButton;
     private JButton removeButton;
     private int[] heap;
@@ -26,17 +32,27 @@ public class ControlPanel extends JPanel {
 
         // Create statistics panel
         JPanel statsPanel = new JPanel();
-        statsPanel.setLayout(new GridLayout(5, 1));
+        statsPanel.setLayout(new GridLayout(10, 1));
         timeTakenLabel = new JLabel("Time Taken: " + timeTaken + " ms");
         numberOfNodesLabel = new JLabel("Number of Nodes: " + numberOfNodes);
         heapHeightLabel = new JLabel("Heap Height: " + calculateHeapHeight());
         heapCapacityLabel = new JLabel("Heap Capacity: " + heap.length);
         heapTypeLabel = new JLabel("Heap Type: " + (visualizer.isMaxHeap ? "Max Heap" : "Min Heap"));
+        rootNodeLabel = new JLabel("Root Node: " + (heap.length > 0 ? heap[0] : "N/A"));
+        minValueLabel = new JLabel("Minimum Value: " + (heap.length > 0 ? Arrays.stream(heap).min().getAsInt() : "N/A"));
+        maxValueLabel = new JLabel("Maximum Value: " + (heap.length > 0 ? Arrays.stream(heap).max().getAsInt() : "N/A"));
+        avgValueLabel = new JLabel("Average Value: " + (heap.length > 0 ? Arrays.stream(heap).average().getAsDouble() : "N/A"));
+        sumValueLabel = new JLabel("Sum of Values: " + (heap.length > 0 ? Arrays.stream(heap).sum() : "N/A"));
         statsPanel.add(timeTakenLabel);
         statsPanel.add(numberOfNodesLabel);
         statsPanel.add(heapHeightLabel);
         statsPanel.add(heapCapacityLabel);
         statsPanel.add(heapTypeLabel);
+        statsPanel.add(rootNodeLabel);
+        statsPanel.add(minValueLabel);
+        statsPanel.add(maxValueLabel);
+        statsPanel.add(avgValueLabel);
+        statsPanel.add(sumValueLabel);
 
         // Create buttons panel
         JPanel buttonsPanel = new JPanel();
@@ -77,9 +93,7 @@ public class ControlPanel extends JPanel {
                     newHeap[heap.length] = newNode;
                     heap = newHeap;
                     numberOfNodes++;
-                    numberOfNodesLabel.setText("Number of Nodes: " + numberOfNodes);
-                    heapHeightLabel.setText("Heap Height: " + calculateHeapHeight());
-                    heapCapacityLabel.setText("Heap Capacity: " + heap.length);
+                    updateLabels();
                     visualizer.updateHeap(heap);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Invalid input. Please enter an integer.");
@@ -94,13 +108,22 @@ public class ControlPanel extends JPanel {
             System.arraycopy(heap, 0, newHeap, 0, heap.length - 1);
             heap = newHeap;
             numberOfNodes--;
-            numberOfNodesLabel.setText("Number of Nodes: " + numberOfNodes);
-            heapHeightLabel.setText("Heap Height: " + calculateHeapHeight());
-            heapCapacityLabel.setText("Heap Capacity: " + heap.length);
+            updateLabels();
             visualizer.updateHeap(heap);
         } else {
             JOptionPane.showMessageDialog(this, "No nodes to remove.");
         }
+    }
+
+    private void updateLabels() {
+        numberOfNodesLabel.setText("Number of Nodes: " + numberOfNodes);
+        heapHeightLabel.setText("Heap Height: " + calculateHeapHeight());
+        heapCapacityLabel.setText("Heap Capacity: " + heap.length);
+        rootNodeLabel.setText("Root Node: " + (heap.length > 0 ? heap[0] : "N/A"));
+        minValueLabel.setText("Minimum Value: " + (heap.length > 0 ? Arrays.stream(heap).min().getAsInt() : "N/A"));
+        maxValueLabel.setText("Maximum Value: " + (heap.length > 0 ? Arrays.stream(heap).max().getAsInt() : "N/A"));
+        avgValueLabel.setText("Average Value: " + (heap.length > 0 ? Arrays.stream(heap).average().getAsDouble() : "N/A"));
+        sumValueLabel.setText("Sum of Values: " + (heap.length > 0 ? Arrays.stream(heap).sum() : "N/A"));
     }
 
     private int calculateHeapHeight() {
