@@ -5,23 +5,20 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class ControlPanel extends JPanel {
-    private JLabel timeTakenLabel;
-    private JLabel numberOfNodesLabel;
-    private JLabel heapHeightLabel;
-    private JLabel heapCapacityLabel;
-    private JLabel heapTypeLabel;
-    private JLabel rootNodeLabel;
-    private JLabel minValueLabel;
-    private JLabel maxValueLabel;
-    private JLabel avgValueLabel;
-    private JLabel sumValueLabel;
-    private JButton addButton;
-    private JButton removeButton;
-    private JLabel arrayLabel;
+    private final JLabel timeTakenLabel;
+    private final JLabel numberOfNodesLabel;
+    private final JLabel heapHeightLabel;
+    private final JLabel heapCapacityLabel;
+    private final JLabel rootNodeLabel;
+    private final JLabel minValueLabel;
+    private final JLabel maxValueLabel;
+    private final JLabel avgValueLabel;
+    private final JLabel sumValueLabel;
+    private final JLabel arrayLabel;
     private int[] heap;
     private long timeTaken;
     private int numberOfNodes;
-    private HeapVisualizer visualizer;
+    private final HeapVisualizer visualizer;
 
     public ControlPanel(int[] heap, HeapVisualizer visualizer) {
         this.heap = heap;
@@ -38,7 +35,7 @@ public class ControlPanel extends JPanel {
         numberOfNodesLabel = new JLabel("Number of Nodes: " + numberOfNodes);
         heapHeightLabel = new JLabel("Heap Height: " + calculateHeapHeight());
         heapCapacityLabel = new JLabel("Heap Capacity: " + heap.length);
-        heapTypeLabel = new JLabel("Heap Type: " + (visualizer.isMaxHeap ? "Max Heap" : "Min Heap"));
+        JLabel heapTypeLabel = new JLabel("Heap Type: " + (visualizer.isMaxHeap ? "Max Heap" : "Min Heap"));
         rootNodeLabel = new JLabel("Root Node: " + (heap.length > 0 ? heap[0] : "N/A"));
         minValueLabel = new JLabel("Minimum Value: " + (heap.length > 0 ? Arrays.stream(heap).min().getAsInt() : "N/A"));
         maxValueLabel = new JLabel("Maximum Value: " + (heap.length > 0 ? Arrays.stream(heap).max().getAsInt() : "N/A"));
@@ -63,8 +60,8 @@ public class ControlPanel extends JPanel {
         // Create buttons panel
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(1, 2));
-        addButton = new JButton("Add Node");
-        removeButton = new JButton("Remove Node");
+        JButton addButton = new JButton("Add Node");
+        JButton removeButton = new JButton("Remove Node");
         buttonsPanel.add(addButton);
         buttonsPanel.add(removeButton);
 
