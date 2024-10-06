@@ -17,6 +17,10 @@ This project is a Java application that visualizes a heap data structure using a
 - **paintComponent(Graphics g)**: Overrides the `paintComponent` method to draw the heap on the panel.
 - **drawHeap(Graphics g, int index, int x, int y, int xOffset)**: Recursively draws the heap nodes and their connections.
 
+### `ControlPanel.java`
+- **Constructor**: Initializes the `ControlPanel` with the given heap array and a reference to the `HeapVisualizer`.
+- **Action Listeners**: Provides buttons and actions to interact with the heap, such as adding or removing elements and updating the visualization.
+
 ## Usage
 1. **Run the Application**: Execute the `Main` class.
 2. **Input Heap Type**: Enter 'max' for a max heap or 'min' for a min heap.
@@ -27,10 +31,6 @@ This project is a Java application that visualizes a heap data structure using a
 // Example usage in Main.java
 public static void main(String[] args) {
     int[] array = {4, 10, 3, 5, 1};
-    HeapVisualizer visualizer = new HeapVisualizer(array);
-    visualizer.heapifyMax(); // or visualizer.heapifyMin();
+    HeapVisualizer visualizer = new HeapVisualizer(array, true); // true for max heap, false for min heap
     visualizer.setVisible(true);
 }
-```
-
-This will display the heap structure in a graphical window.
