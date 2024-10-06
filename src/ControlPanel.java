@@ -17,6 +17,7 @@ public class ControlPanel extends JPanel {
     private JLabel sumValueLabel;
     private JButton addButton;
     private JButton removeButton;
+    private JLabel arrayLabel;
     private int[] heap;
     private long timeTaken;
     private int numberOfNodes;
@@ -43,6 +44,7 @@ public class ControlPanel extends JPanel {
         maxValueLabel = new JLabel("Maximum Value: " + (heap.length > 0 ? Arrays.stream(heap).max().getAsInt() : "N/A"));
         avgValueLabel = new JLabel("Average Value: " + (heap.length > 0 ? Arrays.stream(heap).average().getAsDouble() : "N/A"));
         sumValueLabel = new JLabel("Sum of Values: " + (heap.length > 0 ? Arrays.stream(heap).sum() : "N/A"));
+        arrayLabel = new JLabel("Array: " + Arrays.toString(heap));
         statsPanel.add(timeTakenLabel);
         statsPanel.add(numberOfNodesLabel);
         statsPanel.add(heapHeightLabel);
@@ -54,6 +56,10 @@ public class ControlPanel extends JPanel {
         statsPanel.add(avgValueLabel);
         statsPanel.add(sumValueLabel);
 
+        // Create array panel
+        JPanel arrayPanel = new JPanel();
+        arrayPanel.setLayout(new GridLayout(1, 1));
+        arrayPanel.add(arrayLabel);
         // Create buttons panel
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(1, 2));
@@ -80,6 +86,7 @@ public class ControlPanel extends JPanel {
         // Add panels to the main panel
         add(statsPanel, BorderLayout.NORTH);
         add(buttonsPanel, BorderLayout.SOUTH);
+        add(arrayPanel, BorderLayout.CENTER);
     }
 
     private void addNode() {
@@ -124,6 +131,7 @@ public class ControlPanel extends JPanel {
         maxValueLabel.setText("Maximum Value: " + (heap.length > 0 ? Arrays.stream(heap).max().getAsInt() : "N/A"));
         avgValueLabel.setText("Average Value: " + (heap.length > 0 ? Arrays.stream(heap).average().getAsDouble() : "N/A"));
         sumValueLabel.setText("Sum of Values: " + (heap.length > 0 ? Arrays.stream(heap).sum() : "N/A"));
+        arrayLabel.setText("Array: " + Arrays.toString(heap));
     }
 
     private int calculateHeapHeight() {
