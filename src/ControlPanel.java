@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class ControlPanel extends JPanel {
-    private final JLabel timeTakenLabel;
     private final JLabel numberOfNodesLabel;
     private final JLabel heapHeightLabel;
     private final JLabel heapCapacityLabel;
@@ -16,7 +15,6 @@ public class ControlPanel extends JPanel {
     private final JLabel sumValueLabel;
     private final JLabel arrayLabel;
     private int[] heap;
-    private long timeTaken;
     private int numberOfNodes;
     private final HeapVisualizer visualizer;
 
@@ -24,14 +22,12 @@ public class ControlPanel extends JPanel {
         this.heap = heap;
         this.visualizer = visualizer;
         this.numberOfNodes = heap.length;
-        this.timeTaken = 0;
 
         setLayout(new BorderLayout());
 
         // Create statistics panel
         JPanel statsPanel = new JPanel();
-        statsPanel.setLayout(new GridLayout(10, 1));
-        timeTakenLabel = new JLabel("Time Taken: " + timeTaken + " ms");
+        statsPanel.setLayout(new GridLayout(9, 1));
         numberOfNodesLabel = new JLabel("Number of Nodes: " + numberOfNodes);
         heapHeightLabel = new JLabel("Heap Height: " + calculateHeapHeight());
         heapCapacityLabel = new JLabel("Heap Capacity: " + heap.length);
@@ -42,7 +38,6 @@ public class ControlPanel extends JPanel {
         avgValueLabel = new JLabel("Average Value: " + (heap.length > 0 ? Arrays.stream(heap).average().getAsDouble() : "N/A"));
         sumValueLabel = new JLabel("Sum of Values: " + (heap.length > 0 ? Arrays.stream(heap).sum() : "N/A"));
         arrayLabel = new JLabel("Array: " + Arrays.toString(heap));
-        statsPanel.add(timeTakenLabel);
         statsPanel.add(numberOfNodesLabel);
         statsPanel.add(heapHeightLabel);
         statsPanel.add(heapCapacityLabel);
@@ -133,10 +128,5 @@ public class ControlPanel extends JPanel {
 
     private int calculateHeapHeight() {
         return (int) Math.ceil(Math.log(numberOfNodes + 1) / Math.log(2)) - 1;
-    }
-
-    public void updateTimeTaken(long timeTaken) {
-        this.timeTaken = timeTaken;
-        timeTakenLabel.setText("Time Taken: " + timeTaken + " ms");
     }
 }
